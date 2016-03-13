@@ -1,0 +1,42 @@
+<section>
+  
+  <h2>standings</h2>
+
+  <table>
+    <cpation></cpation>
+    <thead>
+      <tr>
+        <th>Team</th>
+        <th>Played</th>
+        <th>W</th>
+        <th>D</th>
+        <th>L</th>
+        <th>RF</th>
+        <th>RA</th>
+        <th>RD</th>
+        <th>Points</th>
+        <th>Last 5</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each league }}
+      <tr>
+        <td><a href="/teams/{{ id }}">{{ name }}</a></td>
+        <td>{{ pl }}</td>
+        <td>{{ w }}</td>
+        <td>{{ d }}</td>
+        <td>{{ l }}</td>
+        <td>{{ rf }}</td>
+        <td>{{ ra }}</td>
+        <td>{{ rd }}</td>
+        <td>{{ points}}</td>
+        <td>
+          {{#each last5 }}
+            <span title="{{ oppo }} - {{ score }}">{{ outcome }}</span>
+          {{/each }}
+        </td>
+      </tr>
+      {{/each }}
+    </tbody>
+  </table>
+</section>
