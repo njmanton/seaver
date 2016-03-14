@@ -3,7 +3,7 @@
   <h2>standings</h2>
 
   <table>
-    <cpation></cpation>
+    <caption>Standings</caption>
     <thead>
       <tr>
         <th>Team</th>
@@ -21,7 +21,7 @@
     <tbody>
       {{#each league }}
       <tr>
-        <td><a href="/teams/{{ id }}">{{ name }}</a></td>
+        <td><img src="/img/logos/{{ logo }}" alt="{{ name }} Logo"><a href="/teams/{{ id }}">{{ name }}</a></td>
         <td>{{ pl }}</td>
         <td>{{ w }}</td>
         <td>{{ d }}</td>
