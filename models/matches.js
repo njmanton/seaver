@@ -48,7 +48,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       table: function(models) {
         return models.Match.findAll({
-          where: { season: 2013 },
+          where: { season: 2015 },
           order: ['date'],
           raw: true,
           attributes: [
@@ -78,6 +78,7 @@ module.exports = function(sequelize, DataTypes) {
                 table[ta] = {
                   name: ta,
                   id: matches[x]['teama_id'],
+                  logo: ta.replace(/\s|\'/g, '').toLowerCase() + '.png',
                   pl: 0,
                   points: 0,
                   w: 0,
@@ -92,6 +93,7 @@ module.exports = function(sequelize, DataTypes) {
                 table[tb] = {
                   name: tb,
                   id: matches[x]['teamb_id'],
+                  logo: tb.replace(/\s|\'/g, '').toLowerCase() + '.png',
                   pl: 0,
                   points: 0,
                   w: 0,
@@ -141,6 +143,8 @@ module.exports = function(sequelize, DataTypes) {
           for (var prop in table) {
             league.push(table[prop]);
           }
+          // add runs difference to array
+          // and keep only last five results, ordered by date desc
           league.map(function(t) { 
             t.rd = t.rf - t.ra;
             t.last5 = t.last5.reverse().slice(0, 5);

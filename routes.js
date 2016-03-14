@@ -46,6 +46,12 @@ module.exports = function(app) {
     })
   })
 
+  app.get('/format', function(req, res) {
+    res.render('format', {
+      title: 'League Format'
+    })
+  })
+
   app.get('/standings', function(req, res) {
     models.Match.table(models).then(function(table) {
       res.render('standings', {
