@@ -30,6 +30,9 @@ app.use(expressSession({
   maxAge: 3600000 // 1 hour
 }));
 
+app.locals.date_format = '%D %b';
+app.locals.season = 2016;
+
 app.use(flash());
 
 // authentication using passport.js

@@ -1,24 +1,25 @@
 <section>
   
-  <h2>Week {{ week }}</h2>
-  <table>
-    <caption>Fixtures</caption>
-    <thead>
-      <tr>
-        <td>&nbsp;</td>
-        <td>Score</td>
-        <td>&nbsp;</td>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each matches }}
-      <tr class="{{ cls }}">
-        <td><a href="/teams/{{ [TeamA.id] }}">{{ [TeamA.name] }}</a></td>
-        <td>{{ score }}</td>
-        <td><a href="/teams/{{ [TeamB.id] }}">{{ [TeamB.name] }}</a></td>
-      </tr>
-      {{/each }}
-    </tbody>
-  </table>
+  {{#each weeks }}
+    <table>
+      <caption>Week {{ @key }}</caption>
+      <thead>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Score</td>
+          <td>&nbsp;</td>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each fixtures }}
+        <tr class="{{ cls }}">
+          <td><a href="/teams/{{ teama.id }}">{{ teama.name }}</a></td>
+          <td>{{ score }}</td>
+          <td><a href="/teams/{{ teamb.id }}">{{ teamb.name }}</a></td>
+        </tr>
+        {{/each }}
+      </tbody>
+    </table>
+  {{/each }}
   
 </section>
