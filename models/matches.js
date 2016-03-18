@@ -46,9 +46,9 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     classMethods: {
-      table: function(models) {
+      table: function(models, season) {
         return models.Match.findAll({
-          where: { season: 2015 },
+          where: { season: season || 2016 },
           order: ['date'],
           raw: true,
           attributes: [
@@ -152,6 +152,64 @@ module.exports = function(sequelize, DataTypes) {
           return _.orderBy(league, ['points', 'rd', 'rf'], ['desc', 'desc', 'desc']);
 
         });
+      },
+      
+      fixtures: function(models, round, season) {
+        var options = {
+          where: [{ season: season || 2016 }],
+          raw: true,
+          attributes: [
+            'id',
+            'score',
+            'teama_id',
+            'teamb_id',
+            'round',
+            [models.sequelize.fn('date_format', models.sequelize.col('date'), '%D %b'), 'date'],
+          ],
+          include: [{
+            model: models.Team,
+            as: 'TeamA',
+            attributes: ['name']
+          }, {
+            model: models.Team,
+            as: 'TeamB',
+            attributes: ['name']
+          }] 
+        }
+        if (round) {
+          options.where.push({ round: round });
+        }
+        return models.Match.findAll(options).then(function(data) {
+
+          var table = {}, match, weeks = [];
+          for (var x = 0; x < data.length; x++) {
+            match = data[x];
+            if (!(match.round in table)) {
+              table[match.round] = {
+                round: match.round,
+                date: match.date,
+                fixtures: []
+              }
+            }
+            table[match.round].fixtures.push({
+              id: match.id,
+              score: match.score || '-',
+              teama: {
+                id: match.teama_id,
+                name: match['TeamA.name']
+              },
+              teamb: {
+                id: match.teamb_id,
+                name: match['TeamB.name'] 
+              }
+            })
+          }
+          
+          for (var prop in table) {
+            weeks.push(table[prop]);
+          }
+          return weeks;
+        })
       }
     }
   }, {

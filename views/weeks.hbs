@@ -2,14 +2,7 @@
   
   {{#each weeks }}
     <table>
-      <caption>Week {{ @key }}</caption>
-      <thead>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Score</td>
-          <td>&nbsp;</td>
-        </tr>
-      </thead>
+      <caption>Week {{ round }} ({{ date }})</caption>
       <tbody>
         {{#each fixtures }}
         <tr class="{{ cls }}">

@@ -2,7 +2,7 @@
 
 var Sequelize = require('sequelize'),
     conn      = require('../config/db_config'),
-    sequelize = new Sequelize(conn.test, { logging: false }),
+    sequelize = new Sequelize(conn.test, { logging: null }),
     db        = {};
 
 db['Team']  = sequelize.import('./teams.js');
