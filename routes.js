@@ -94,8 +94,10 @@ module.exports = function(app) {
           var scores = [], result = null;
           if (matches[x].teama_id == req.params.id) {
             matches[x].home = true;
+            matches[x].logo = matches[x]['TeamB.name'].replace(/\s|\'/g, '').toLowerCase() + '.png';
           } else {
             matches[x].home = false;
+            matches[x].logo = matches[x]['TeamA.name'].replace(/\s|\'/g, '').toLowerCase() + '.png';
           }
 
           if (matches[x].score) {

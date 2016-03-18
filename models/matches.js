@@ -196,11 +196,13 @@ module.exports = function(sequelize, DataTypes) {
               score: match.score || '-',
               teama: {
                 id: match.teama_id,
-                name: match['TeamA.name']
+                name: match['TeamA.name'],
+                logo: match['TeamA.name'].replace(/\s|\'/g, '').toLowerCase() + '.png'
               },
               teamb: {
                 id: match.teamb_id,
-                name: match['TeamB.name'] 
+                name: match['TeamB.name'],
+                logo: match['TeamB.name'].replace(/\s|\'/g, '').toLowerCase() + '.png',
               }
             })
           }
