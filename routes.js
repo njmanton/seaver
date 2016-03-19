@@ -90,6 +90,7 @@ module.exports = function(app) {
       team,
       matches,
       function(team, matches) {
+        team.logo = team.name.replace(/\s|\'/g, '').toLowerCase() + '.png';
         for (var x = 0; x < matches.length; x++) {
           var scores = [], result = null;
           if (matches[x].teama_id == req.params.id) {
@@ -109,6 +110,8 @@ module.exports = function(app) {
               // if selected team is 'away' then reverse the order of the score
               matches[x].score = matches[x].score.split('-').reverse().join('-');
             }
+          } else {
+            matches[x].score = '-';
           }
         }
         res.render('teams', {
