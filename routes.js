@@ -79,11 +79,11 @@ module.exports = function(app) {
       include: [{
         model: models.Team,
         as: 'TeamA',
-        attributes: ['name']
+        attributes: ['id', 'name']
       }, {
         model: models.Team,
         as: 'TeamB',
-        attributes: ['name']
+        attributes: ['id', 'name']
       }]    
     });
     models.sequelize.Promise.join(
