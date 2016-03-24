@@ -6,15 +6,11 @@
       <tbody>
         {{#each fixtures }}
         <tr>
-          <td>
-            <img src="/img/logos/{{ teama.logo }}" alt="{{ teama.name }} Logo">
-            <a href="/teams/{{ teama.id }}">{{ teama.name }}</a>
-          </td>
-          <td>{{ score }}</td>
-          <td>
-            <a href="/teams/{{ teamb.id }}">{{ teamb.name }}</a>
-            <img src="/img/logos/{{ teamb.logo }}" alt="{{ teamb.name }} Logo">
-          </td>
+          <td class="logo"><img src="/img/logos/{{ teama.logo }}" alt="{{ teama.name }} Logo"></td>
+          <td><a href="/teams/{{ teama.id }}">{{ teama.name }}</a></td>
+          <td class="score">{{ score }}</td>
+          <td><a href="/teams/{{ teamb.id }}">{{ teamb.name }}</a></td>
+          <td class="logo"><img src="/img/logos/{{ teamb.logo }}" alt="{{ teamb.name }} Logo"></td>
         </tr>
         {{/each }}
       </tbody>

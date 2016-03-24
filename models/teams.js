@@ -12,6 +12,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
+    s2011: {
+      type: DataTypes.INTEGER(11),
+      allowNull: true
+    },
     s2013: {
       type: DataTypes.INTEGER(11),
       allowNull: true
@@ -20,6 +24,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER(11),
       allowNull: true
     },
+    s2015: {
+      type: DataTypes.INTEGER(11),
+      allowNull: true
+    },    
     s2015: {
       type: DataTypes.INTEGER(11),
       allowNull: true

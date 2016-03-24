@@ -1,0 +1,143 @@
+@import url(normalize.min.css);
+@import url(vendor/bootstrap.min.css);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,900);
+
+// overrides
+
+ins {
+  font-style: italic;
+  text-decoration: none;
+}
+
+body {
+  font-family: Lato, arial, helvetica, sans-serif;
+}
+
+// site-wide colors
+$table-header: rgb(255, 0, 0);
+$table-grid: #ccc;
+
+$win: #73b773;
+$lose: #d04a4a;
+$draw: #7c7ce0;
+
+// common styling
+
+h2 {
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 1em;
+}
+
+.fs_bg {
+  background-image: url(../img/bg-1.jpg);
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
+  #logo {
+    width: 30%;
+    float: right; 
+    margin-right: 2em;    
+  }
+  h1 {
+    font-family: Lato, arial, helvetica, sans-serif;
+    font-size: 5em;
+    font-weight: 900;
+    color: #eee;
+    letter-spacing: 0.05em;
+    margin: 0.3em 0 0 0;
+  }
+  h2 {
+    font-family: Lato, arial, helvetica, sans-serif;
+    font-size: 2.5em;
+    font-weight: 400;
+    color: #eee;
+    margin-top: 0;
+  }
+}
+
+.last5 {
+  width: 1.3em;
+  font-size: 0.8em;
+  float: left;
+  margin: 0.1em;
+  text-align: center;
+  color: #eee;
+  opacity: 0.6;
+  cursor: help;
+  padding: 0.1em;
+  background-color: $draw;
+  &[data-outcome="W"] {
+    background-color: $win;
+  }
+  &[data-outcome="L"] {
+    background-color: $lose;
+  }
+  &:hover {
+    opacity: 1;
+  }
+}
+
+// banner styles
+
+.big_logo {
+  display: block;
+  margin: 0 auto 0.3em auto;
+  height: 100px;
+}
+
+header {
+  background-color: #222;
+  a {
+    margin: 0.2em;
+    color: #eee;
+  }
+  margin-bottom: 1em;
+}
+
+.prev {
+  text-align: center;
+}
+
+.menu-item {
+  display: inline-block;
+  margin: 0.4em;
+}
+
+// tables
+
+table {
+  margin: 0 auto; // centre tables
+  font-size: 1.5em;
+  width: 60%;
+  td {
+    padding: 0.3em;
+    border-top: 1px solid $table-grid;
+    border-bottom: 1px solid $table-grid;
+  }
+  td.logo, td.score {
+    text-align: center;
+  }
+  img {
+    height: 60px;
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (max-width : 767px) {
+  width: 90%;
+  color: red;
+  font-size: 1.1em;
+}
+
+caption {
+  margin: 1em;
+  font-weight: bold;
+}
+
+// forms
+
+
+// footer

@@ -1,4 +1,5 @@
 <section>
+  <img class="big_logo" src="/img/logos/{{ team.logo }}" alt="{{ team }} logo" />
   <h2>{{ team.name }}</h2>
   
   <table>
@@ -6,7 +7,7 @@
     <thead>
       <tr>
         <th>Date</th>
-        <th>Opponent</th>
+        <th colspan="2">Opponent</th>
         <th>Score</th>
       </tr>
     </thead>
@@ -14,18 +15,26 @@
       {{#each matches }}
       <tr class="{{ cls }}">
         <td>{{ date }}</td>
-        <td><img src="/img/logos/{{ logo }}" alt="{{ name }} Logo">
+        <td class="logo"><img src="/img/logos/{{ logo }}" alt="{{ name }} Logo"></td>
+        <td>
           {{#if home }}
           <a href="/teams/{{ [TeamB.id] }}">{{ [TeamB.name] }}</a>
           {{ else }}
           <a href="/teams/{{ [TeamA.id] }}">{{ [TeamA.name] }}</a>
           {{/if }}
         </td>
-        <td>{{ score }}</td>
+        <td class="score">{{ score }}</td>
       </tr>
       {{/each }}
     </tbody>
   </table>
+  <div class="prev">
+    <h4>Previous Results</h4>
+    <a href="/teams/{{ team.id }}/2011">2011</a>
+    <a href="/teams/{{ team.id }}/2013">2013</a>
+    <a href="/teams/{{ team.id }}/2014">2014</a>
+    <a href="/teams/{{ team.id }}/2015">2015</a>
+  </div>
 </section>
 <style>
   tr.win > td {

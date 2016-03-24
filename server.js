@@ -41,6 +41,8 @@ require('./auth')(app);
 // routing
 require('./routes')(app);
 
+models.Team.findAll({ where: { s2016: 1 } }).then(function(data) { app.locals.dd_teams = data; });
+
 // set up sequelize and start server listening
 models.sequelize.sync().then(function() {
   console.log('Databases Initialised');

@@ -1,42 +1,51 @@
 <section>
   
-  <h2>standings</h2>
+  <h2>{{ season }} Standings</h2>
 
   <table>
-    <caption>Standings</caption>
     <thead>
       <tr>
-        <th>Team</th>
-        <th>Played</th>
+        <th colspan="2">Team</th>
+        <th>P</th>
         <th>W</th>
         <th>D</th>
         <th>L</th>
         <th>RF</th>
         <th>RA</th>
         <th>RD</th>
-        <th>Points</th>
-        <th>Last 5</th>
+        <th>Pts</th>
+        <th><acronym title="Last 5 games">L5</acronym></th>
       </tr>
     </thead>
     <tbody>
       {{#each league }}
       <tr>
-        <td><img src="/img/logos/{{ logo }}" alt="{{ name }} Logo"><a href="/teams/{{ id }}">{{ name }}</a></td>
-        <td>{{ pl }}</td>
-        <td>{{ w }}</td>
-        <td>{{ d }}</td>
-        <td>{{ l }}</td>
-        <td>{{ rf }}</td>
-        <td>{{ ra }}</td>
-        <td>{{ rd }}</td>
-        <td>{{ points}}</td>
+        <td><img src="/img/logos/{{ logo }}" alt="{{ name }} Logo"></td>
+        <td><a href="/teams/{{ id }}">{{ name }}</a></td>
+        <td class="score">{{ pl }}</td>
+        <td class="score">{{ w }}</td>
+        <td class="score">{{ d }}</td>
+        <td class="score">{{ l }}</td>
+        <td class="score">{{ rf }}</td>
+        <td class="score">{{ ra }}</td>
+        <td class="score">{{ rd }}</td>
+        <td class="score">{{ points }}</td>
         <td>
           {{#each last5 }}
-            <span title="{{ oppo }} - {{ score }}">{{ outcome }}</span>
+            <span class="last5" data-outcome="{{ outcome }}" data-toggle="tooltip" title="{{ oppo }} - {{ score }}">{{ outcome }}</span>
           {{/each }}
         </td>
       </tr>
       {{/each }}
     </tbody>
   </table>
+
+  <div class="prev">
+    <h4>Previous Standings</h4>
+    <a href="/standings/2011">2011</a>
+    <a href="/standings/2013">2013</a>
+    <a href="/standings/2014">2014</a>
+    <a href="/standings/2015">2015</a>    
+  </div>
+
 </section>

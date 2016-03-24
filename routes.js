@@ -13,10 +13,12 @@ module.exports = function(app) {
 
   // home page
   app.get('/', function(req, res) {
-    res.render('home', {
-      title: 'Welcome',
-      bodyclass: 'fs_bg'
-    });
+    models.Match.table(models, req.params.season).then(function(table) {
+      res.render('standings', {
+        title: 'Standings',
+        league: table
+      });
+    });;
   })
 
   // login
@@ -54,10 +56,11 @@ module.exports = function(app) {
   // get the standings
   // optionally add a year to get that year's table
   app.get('/standings/:season?', function(req, res) {
-    models.Match.table(models, req.params.season).then(function(table) {
+    models.Match.table(models, req.params.season).then(function(table) { console.log(table);
       res.render('standings', {
         title: 'Standings',
-        league: table
+        league: table,
+        season: req.params.season || 2016
       })
     });
   })
@@ -126,7 +129,7 @@ module.exports = function(app) {
     models.Match.fixtures(models, req.params.id, req.params.season).then(function(data) {
       res.render('weeks', {
         title: (data.length == 1) ? 'Week ' + data[0].round : 'Fixtures',
-        weeks: data 
+        weeks: data
       })
     })
   })
