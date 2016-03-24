@@ -56,7 +56,7 @@ module.exports = function(app) {
   // get the standings
   // optionally add a year to get that year's table
   app.get('/standings/:season?', function(req, res) {
-    models.Match.table(models, req.params.season).then(function(table) { console.log(table);
+    models.Match.table(models, req.params.season).then(function(table) { 
       res.render('standings', {
         title: 'Standings',
         league: table,
