@@ -111,7 +111,7 @@ header {
 table {
   margin: 0 auto; // centre tables
   font-size: 1.5em;
-  width: 60%;
+  min-width: 60%;
   td {
     padding: 0.3em;
     border-top: 1px solid $table-grid;

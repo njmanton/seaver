@@ -78,7 +78,7 @@ header {
 table {
   margin: 0 auto;
   font-size: 1.5em;
-  width: 60%; }
+  min-width: 60%; }
   table td {
     padding: 0.3em;
     border-top: 1px solid #cccccc;
