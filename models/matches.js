@@ -157,7 +157,6 @@ module.exports = function(sequelize, DataTypes) {
       fixtures: function(models, round, season) {
         var options = {
           where: [{ season: season || 2016 }],
-          raw: true,
           attributes: [
             'id',
             'score',
@@ -196,13 +195,13 @@ module.exports = function(sequelize, DataTypes) {
               score: match.score || '-',
               teama: {
                 id: match.teama_id,
-                name: match['TeamA.name'],
-                logo: match['TeamA.name'].replace(/\s|\'/g, '').toLowerCase() + '.png'
+                name: match.TeamA.name,
+                logo: match.TeamA.name.replace(/\s|\'/g, '').toLowerCase() + '.png'
               },
               teamb: {
                 id: match.teamb_id,
-                name: match['TeamB.name'],
-                logo: match['TeamB.name'].replace(/\s|\'/g, '').toLowerCase() + '.png',
+                name: match.TeamB.name,
+                logo: match.TeamB.name.replace(/\s|\'/g, '').toLowerCase() + '.png',
               }
             })
           }
