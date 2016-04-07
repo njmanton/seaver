@@ -1,6 +1,7 @@
 'use strict';
 
 var models    = require('./models'),
+    moment    = require('moment'),
     passport  = require('passport');
 
 module.exports = function(app) {
@@ -13,12 +14,23 @@ module.exports = function(app) {
 
   // home page
   app.get('/', function(req, res) {
-    models.Match.table(models, req.params.season).then(function(table) {
+    /*models.Match.table(models, req.params.season).then(function(table) {
       res.render('standings', {
         title: 'Standings',
         league: table
       });
-    });;
+    });*/
+    // get current day, then work out the Wednesday, then week id
+    let start = moment('2016 04 11', 'YYYY MM DD'),
+        now = moment('');
+    var week = (Math.floor(now.diff(start, 'days') / 7) + 1) || 1;
+    console.log(week);
+    models.Match.fixtures(models, week, 2016).then(function(data) {
+      res.render('weeks', {
+        title: 'This Week\'s Games',
+        weeks: data
+      })
+    })
   })
 
   // login
@@ -128,7 +140,6 @@ module.exports = function(app) {
   app.get('/weeks/:id?/:season?', function(req, res) {
     models.Match.fixtures(models, req.params.id, req.params.season).then(function(data) {
       res.render('weeks', {
-        title: (data.length == 1) ? 'Week ' + data[0].round : 'Fixtures',
         weeks: data
       })
     })
