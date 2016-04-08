@@ -10,9 +10,12 @@
         <tr>
           <td class="logo"><img src="/img/logos/{{ teama.logo }}" alt="{{ teama.name }} Logo"></td>
           <td><a href="/teams/{{ teama.id }}">{{ teama.name }}</a></td>
-          <td class="score">{{ score }}</td>
+          <td><div class="score">{{ score }}</div></td>
           <td><a href="/teams/{{ teamb.id }}">{{ teamb.name }}</a></td>
           <td class="logo"><img src="/img/logos/{{ teamb.logo }}" alt="{{ teamb.name }} Logo"></td>
+          {{#if ../../user }}
+          <td><button data-match="{{ id }}">Edit</button></td>
+          {{/if }}
         </tr>
         {{/each }}
       </tbody>
