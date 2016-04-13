@@ -124,7 +124,26 @@ table {
     height: 60px;
     margin: 0 auto;
   }
+  input {
+    margin-right: 1em;
+    width: 3.2em;
+    font-size: 1em;
+  }
 }
+
+button {
+  font-size: 0.8em;
+}
+
+
+
+#msg {
+  font-size: 0.8em;
+  color: #a00;
+  padding-left: 1em;
+}
+
+
 
 @media only screen and (max-width : 767px) {
   width: 90%;

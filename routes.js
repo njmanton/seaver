@@ -14,13 +14,6 @@ module.exports = function(app) {
 
   // home page
   app.get('/', function(req, res) {
-    /*models.Match.table(models, req.params.season).then(function(table) {
-      res.render('standings', {
-        title: 'Standings',
-        league: table
-      });
-    });*/
-    // get current day, then work out the Wednesday, then week id
     let start = moment('2016 04 11', 'YYYY MM DD'),
         now = moment('');
     var week = (Math.floor(now.diff(start, 'days') / 7) + 1) || 1;
@@ -145,16 +138,23 @@ module.exports = function(app) {
   })
 
   // handle the ajax POST of a result
-  app.post('/matches/:id', function(req, res) {
+  app.post('/matches/result', function(req, res) {
     
     if (req.user) {
-      models.Match.update({
-        score: req.body.score
-      }, {
-        where: [{ id: req.params.id }, { season: 2016 }]
-      }).then(function(rows) {
-        res.send(rows == 1);
-      })
+      if (req.body.score.match(/[0-9]{1,2}-[0-9]{1,2}/)) {
+        models.Match.update({
+          score: req.body.score || null
+        }, {
+          where: [{ id: req.body.mid }, { season: 2016 }]
+        }).then(function(rows) {
+          res.send(rows == 1);
+        }).catch(function(e) {
+          res.send(e);
+        })
+      } else {
+        res.send(false);
+      }
+      
     } else {
       res.sendStatus(403);
     }

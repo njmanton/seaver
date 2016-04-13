@@ -1,7 +1,8 @@
 <header>
+  <div class="menu-item"><a href="/">Home</a></div>
   {{#if user }}
     <div class="menu-item">
-      {{ user.username }} <a href="/logout">Logout</a>
+      <a href="/logout">Logout</a>
     </div>
   {{ else }}
     <div class="menu-item">

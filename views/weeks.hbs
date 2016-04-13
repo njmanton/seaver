@@ -7,14 +7,14 @@
       <caption>Week {{ round }} ({{ date }})</caption>
       <tbody>
         {{#each fixtures }}
-        <tr>
+        <tr data-mid="{{ id }}">
           <td class="logo"><img src="/img/logos/{{ teama.logo }}" alt="{{ teama.name }} Logo"></td>
           <td><a href="/teams/{{ teama.id }}">{{ teama.name }}</a></td>
           <td><div class="score">{{ score }}</div></td>
           <td><a href="/teams/{{ teamb.id }}">{{ teamb.name }}</a></td>
           <td class="logo"><img src="/img/logos/{{ teamb.logo }}" alt="{{ teamb.name }} Logo"></td>
           {{#if ../../user }}
-          <td><button data-match="{{ id }}">Edit</button></td>
+          <td><button class="edt btn btn-primary">&#9998; Edit</button></td>
           {{/if }}
         </tr>
         {{/each }}
