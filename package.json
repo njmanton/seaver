@@ -1,6 +1,6 @@
 {
   "name": "seaver",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "LCSSL softball league scores",
   "main": "server.js",
   "scripts": {
