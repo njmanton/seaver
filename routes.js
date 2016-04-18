@@ -132,6 +132,7 @@ module.exports = function(app) {
   app.get('/weeks/:id?/:season?', function(req, res) {
     models.Match.fixtures(models, req.params.id, req.params.season).then(function(data) {
       res.render('weeks', {
+        title: (req.params.id) ? 'LCSSL Week ' + req.params.id : 'LCSSL Fixtures',
         weeks: data
       })
     })
