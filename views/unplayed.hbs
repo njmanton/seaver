@@ -1,0 +1,26 @@
+<section>
+   
+    <table>
+      <caption>Unplayed games</caption>
+      <thead>
+        <tr>
+          <th>Week</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each fixtures }}
+        <tr data-mid="{{ id }}">
+          <td>{{ round }}</td>
+          <td class="logo"><img src="/img/logos/{{ TeamA.logo }}" alt="{{ TeamA.name }} Logo"></td>
+          <td><a href="/teams/{{ TeamA.id }}">{{ TeamA.name }}</a></td>
+          <td><a href="/teams/{{ TeamB.id }}">{{ TeamB.name }}</a></td>
+          <td class="logo"><img src="/img/logos/{{ TeamB.logo }}" alt="{{ TeamB.name }} Logo"></td>
+          {{#if ../user }}
+          <td><button class="edt btn btn-primary">&#9998; Edit</button></td>
+          {{/if }}
+        </tr>
+        {{/each }}
+      </tbody>
+    </table>
+  
+</section>

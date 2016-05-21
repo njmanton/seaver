@@ -57,6 +57,36 @@ module.exports = function(app) {
     })
   })
 
+  app.get('/unplayed', (req, res) => {
+    
+    let start = moment('2016 04 11', 'YYYY MM DD'),
+        now = moment();
+    var week = (Math.floor(now.diff(start, 'days') / 7) + 1) || 1;
+    models.Match.findAll({
+      order: ['round'],
+      attributes: ['id', 'round', 'round', 'score'],
+      where: [{ score: null }, { round: { $lte: week } }, { season: 2016 }],
+      include: [{
+        model: models.Team,
+        as: 'TeamA',
+        attributes: ['id', 'name']
+      }, {
+        model: models.Team,
+        as: 'TeamB',
+        attributes: ['id', 'name']
+      }]
+    }).then(games => {
+      games.map(m => { 
+        m.TeamA.logo = m.TeamA.name.replace(/\s|\'/g, '').toLowerCase() + '.png';
+        m.TeamB.logo = m.TeamB.name.replace(/\s|\'/g, '').toLowerCase() + '.png' }
+      )
+      res.render('unplayed', {
+        title: 'Unplayed Games',
+        fixtures: games
+      })
+    })
+  })
+
   // get the standings
   // optionally add a year to get that year's table
   app.get('/standings/:season?', function(req, res) {
