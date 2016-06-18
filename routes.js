@@ -16,12 +16,23 @@ module.exports = function(app) {
   app.get('/', function(req, res) {
     let start = moment('2016 04 11', 'YYYY MM DD'),
         now = moment();
-    var week = (Math.floor(now.diff(start, 'days') / 7) + 1) || 1;
+    var week = (Math.floor(now.diff(start, 'days') / 7) + 1) || 1; 
     models.Match.fixtures(models, week, 2016).then(function(data) {
-      res.render('weeks', {
-        title: 'This Week\'s Games',
-        weeks: data
-      })
+      if (data.length) {
+        res.render('weeks', {
+          title: 'This Week\'s Games',
+          weeks: data
+        })
+      } else {
+        models.Match.table(models, 2016).then(table => { 
+          res.render('standings', {
+            title: 'Standings',
+            league: table,
+            season: 2016
+          })
+        });
+      }
+
     })
   })
 
