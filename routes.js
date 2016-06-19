@@ -16,7 +16,7 @@ module.exports = function(app) {
   app.get('/', function(req, res) {
     let start = moment('2016 06 27', 'YYYY MM DD'),
         now = moment();
-    var week = (Math.floor(now.diff(start, 'days') / 7) + 1) || 1;
+    var week = (Math.floor(now.diff(start, 'days') / 7) + 1) || -1;
     models.Match.fixtures(models, week, 2016).then(function(data) {
       if (data.length) {
         res.render('weeks', {
