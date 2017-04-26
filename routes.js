@@ -3,6 +3,7 @@
 
 var models    = require('./models'),
     moment    = require('moment'),
+    mail      = require('./mail'),
     config    = require('./config'),
     passport  = require('passport');
 
@@ -74,7 +75,7 @@ const routes = app => {
     
     let start = moment(config.first_week, 'YYYY MM DD'),
         now = moment();
-    var week = (Math.floor(now.diff(start, 'days') / 7) + 1) || 1;
+    var week = (Math.floor(now.diff(start, 'days') / 7) + 1) || 1; 
     models.Match.findAll({
       order: ['round'],
       attributes: ['id', 'round', 'round', 'score'],
@@ -181,12 +182,13 @@ const routes = app => {
 
   // handle an email submitted to results@lcssl.org
   app.post('/process_email', (req, res) => {
-    // parse the request for data, team, score, team
-    // if parsed correctly, save result and send email back
-    // otherwise send failure email
-    console.log(req);
-  });
+    // test file from curl at:
+    // curl -X POST -d "@test.json" -H "Content-Type: application/json" localhost:1969/process_email
+  
+    models.Match.emailsub(models, req.body);
+    res.send(true);
 
+  });
 
   // handle the ajax POST of a result
   app.post('/matches/result', (req, res) => {
@@ -196,7 +198,7 @@ const routes = app => {
         models.Match.update({
           score: req.body.score || null
         }, {
-          where: [{ id: req.body.mid }, { season: 2016 }]
+          where: [{ id: req.body.mid }, { season: config.year }]
         }).then(rows => {
           res.send(rows == 1);
         }).catch(e => {

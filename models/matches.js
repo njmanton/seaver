@@ -1,6 +1,12 @@
-var _ = require('lodash');
+//jshint node: true, esversion: 6
+'use strict';
 
-module.exports = function(sequelize, DataTypes) {
+var _       = require('lodash'),
+    mail    = require('../mail'),
+    moment  = require('moment'),
+    config  = require('../config');
+
+const matches = (sequelize, DataTypes) => {
   return sequelize.define('matches', {
     id: {
       type: DataTypes.INTEGER(11),
@@ -46,9 +52,9 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     classMethods: {
-      table: function(models, season) {
+      table: (models, season) => {
         return models.Match.findAll({
-          where: { season: season || 2016 },
+          where: { season: season || config.year },
           order: ['date'],
           raw: true,
           attributes: [
@@ -66,7 +72,7 @@ module.exports = function(sequelize, DataTypes) {
             as: 'TeamB',
             attributes: ['name']
           }]  
-        }).then(function(matches) {
+        }).then(matches => {
           var table = {};
           // loop through matches, creating an array of teams with results
           for (var x = 0; x < matches.length; x++) {
@@ -105,7 +111,7 @@ module.exports = function(sequelize, DataTypes) {
                 }
               }
             if (matches[x].score != null) {
-              var scores = matches[x].score.split('-').map(function(e) { return e * 1; });
+              var scores = matches[x].score.split('-').map(e => { return e * 1; });
 
               if (scores[0] > scores[1]) { // 'home' win
                 table[ta].w++;
@@ -145,7 +151,7 @@ module.exports = function(sequelize, DataTypes) {
           }
           // add runs difference to array
           // and keep only last five results, ordered by date desc
-          league.map(function(t) { 
+          league.map(t => { 
             t.rd = t.rf - t.ra;
             t.last5 = t.last5.reverse().slice(0, 5);
           });
@@ -154,9 +160,9 @@ module.exports = function(sequelize, DataTypes) {
         });
       },
       
-      fixtures: function(models, round, season) {
+      fixtures: (models, round, season) => {
         var options = {
-          where: [{ season: season || 2016 }],
+          where: [{ season: season || config.year }],
           attributes: [
             'id',
             'score',
@@ -178,7 +184,7 @@ module.exports = function(sequelize, DataTypes) {
         if (round) {
           options.where.push({ round: round });
         }
-        return models.Match.findAll(options).then(function(data) {
+        return models.Match.findAll(options).then(data => {
 
           var table = {}, match, weeks = [];
           for (var x = 0; x < data.length; x++) {
@@ -211,10 +217,89 @@ module.exports = function(sequelize, DataTypes) {
           }
           return weeks;
         })
-      }
+      },
+
+      emailsub: (models, data) => {
+
+        let msgs_errors = ['Sorry, there was a problem with that email submission'],
+        err = false;
+
+        const email     = data['stripped-text'] || null;
+        const sender    = data['sender'] || null,
+              tokens    = data['stripped-text'].split(' ', 4) || [],
+              teama     = tokens[1].replace(/[^0-9a-z]/gi, ''),
+              teamb     = tokens[3].replace(/[^0-9a-z]/gi, ''),
+              score     = tokens[2],
+              teama_id  = config.teams[teama],
+              teamb_id  = config.teams[teamb];
+
+        // construct a date object from input
+        let date_parts = tokens[0].split('/');
+        let date = new Date(date_parts[2], date_parts[1] * 1 - 1, date_parts[0] * 1, 12);
+
+        // validate inputs
+        if (tokens.length != 4) {
+          msgs_errors.push('Couldn\'t parse email');
+          err = true;
+        }
+        if (!teama_id) {
+          msgs_errors.push('The first team was not recognised');
+          err = true;
+        }
+        if (!teamb_id) {
+          msgs_errors.push('The second team was not recognised');
+          err = true;
+        }
+        if (!score || !score.match(/^\d{1,2}-\d{1,2}$/)) {
+          msgs_errors.push('The score wasn\'t recognised, or was invalid');
+          err = true;
+        }
+        if (!date || !moment(date).isValid()) {
+          msgs_errors.push('The date was not valid');
+          err = true;
+        }
+
+        if (err) {
+          msgs_errors.push('\nOriginal submission:');
+          msgs_errors.push(email);
+          msgs_errors.push('\n\n--\nhttp://lcssl.org');
+          return mail.send(sender, 'Softball Results Submission unsuccessful', msgs_errors.join('\n'), mail_response => {
+            return(true);
+          })
+        } else {
+          models.Match.update({
+            score: score || null
+          }, {
+            //where: [{ teama_id: teama_id }, { teamb_id: teamb_id }, { date: moment(date).format('YYYY-MM-DD') }]
+            // teams can be either order
+            // ((a = 1 && b = 2) || (a = 2 && b = 1) && date)
+            where: { $or: [
+                        { $and: 
+                          { teama_id: teama_id, teamb_id: teamb_id }
+                        },
+                        { $and:
+                          { teama_id: teamb_id, teamb_id: teama_id }
+                        }
+                      ],
+                      date: moment(date).format('YYYY-MM-DD')
+                    }
+            
+          }).then(rows => {
+            let email_body = (rows != false) 
+              ? 'Your match result was successfully processed\n\n--\nhttp://lcssl.org' 
+              : 'Sorry, there was a problem updating that match' ;
+            return mail.send(sender, 'Softball Results Submission', email_body, mail_response => {
+              return(true);
+            })
+          })
+        }
+
+      } // end update
     }
   }, {
     tableName: 'matches',
     freezeTableName: true
   });
 };
+
+module.exports = matches;
