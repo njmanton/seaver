@@ -1,6 +1,7 @@
 /* jshint indent: 2 */
+'use strict';
 
-module.exports = function(sequelize, DataTypes) {
+const teams = (sequelize, DataTypes) => {
   return sequelize.define('teams', {
     id: {
       type: DataTypes.INTEGER(4),
@@ -45,3 +46,5 @@ module.exports = function(sequelize, DataTypes) {
     freezeTableName: true
   });
 };
+
+module.exports = teams;

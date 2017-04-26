@@ -1,3 +1,4 @@
+//jshint node: true, esversion: 6
 'use strict';
 
 var Sequelize = require('sequelize'),
@@ -21,3 +22,4 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
+

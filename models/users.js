@@ -1,6 +1,7 @@
-var _  = require('lodash');
+//jshint node: true, esversion: 6
+'use strict';
 
-module.exports = function(sequelize, DataTypes) {
+const users = (sequelize, DataTypes) => {
   return sequelize.define('users', {
     id: {
       type: DataTypes.INTEGER(10),
@@ -34,3 +35,5 @@ module.exports = function(sequelize, DataTypes) {
     freezeTableName: true
   });
 };
+
+module.exports = users;

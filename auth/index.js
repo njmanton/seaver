@@ -5,48 +5,48 @@ var models        = require('../models'),
     passport      = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
 
-module.exports = function(app) {
+let auth = app => {
 
   app.use(passport.initialize());
   app.use(passport.session());
 
-  passport.use('local', new LocalStrategy(
-    function(username, password, done) {
-      models.User.findOne({
-        where: { username: username },
-        raw: true
-      }).then(function(user) {
-        if (!user) {
-          console.log('user not found');
-          return done(null, false, { message: 'User not found' });
-        }
-        if (!bCrypt.compareSync(password, user.password)) {
-          console.log('wrong password');
-          return done(null, false, { message: 'Incorect password' })
-        }
-        return done(null, user);
+  passport.use('local', new LocalStrategy((username, password, done) => {
+    models.User.findOne({
+      where: { username: username },
+      raw: true
+    }).then(user => {
+      if (!user) {
+        console.log('user not found');
+        return done(null, false, { message: 'User not found' });
+      }
+      if (!bCrypt.compareSync(password, user.password)) {
+        console.log('wrong password');
+        return done(null, false, { message: 'Incorect password' })
+      }
+      return done(null, user);
 
-      }).catch(function(err) {
-        return done(err);
-      })
-    }
-  ));
+    }).catch(err => {
+      return done(err);
+    })
+  }));
 
-  app.use(function (req, res, next) {
+  app.use((req, res, next) => {
     if (!res.locals.user && req.user) {
       res.locals.user = req.user;
     }
     next();
   });
 
-  passport.serializeUser(function(user, done) {
+  passport.serializeUser((user, done) => {
     done(null, user.id);
   });
 
-  passport.deserializeUser(function(id, done) {
-    models.User.findById(id).then(function(user) {
+  passport.deserializeUser((id, done) => {
+    models.User.findById(id).then(user => {
       done(null, user);
     });
   });
 
 }
+
+module.exports = auth;
