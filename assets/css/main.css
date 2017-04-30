@@ -1,5 +1,6 @@
 @import url(normalize.min.css);
 @import url(vendor/bootstrap.min.css);
+@import url(https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css);
 @import url(https://fonts.googleapis.com/css?family=Lato:400,900);
 ins {
   font-style: italic;
@@ -7,6 +8,9 @@ ins {
 
 body {
   font-family: Lato, arial, helvetica, sans-serif; }
+
+body {
+  font-size: 16px; }
 
 h2 {
   margin: 0 auto;
@@ -81,9 +85,9 @@ table {
   min-width: 60%; }
   table td {
     padding: 0.3em;
-    border-top: 1px solid #cccccc;
-    border-bottom: 1px solid #cccccc; }
-  table td.logo, table td.score {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc; }
+  table td.logo, table td.score, table th {
     text-align: center; }
   table img {
     height: 60px;
@@ -105,6 +109,9 @@ button {
   width: 90%;
   color: red;
   font-size: 1.1em; }
+
 caption {
-  margin: 1em;
-  font-weight: bold; }
+  margin: 0.5em 1em;
+  font-weight: bold;
+  caption-side: top;
+  text-align: center; }

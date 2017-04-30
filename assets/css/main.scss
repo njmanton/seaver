@@ -1,5 +1,6 @@
 @import url(normalize.min.css);
 @import url(vendor/bootstrap.min.css);
+@import url(https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css);
 @import url(https://fonts.googleapis.com/css?family=Lato:400,900);
 
 // overrides
@@ -12,6 +13,8 @@ ins {
 body {
   font-family: Lato, arial, helvetica, sans-serif;
 }
+
+body { font-size: 16px; }
 
 // site-wide colors
 $table-header: rgb(255, 0, 0);
@@ -117,7 +120,7 @@ table {
     border-top: 1px solid $table-grid;
     border-bottom: 1px solid $table-grid;
   }
-  td.logo, td.score {
+  td.logo, td.score, th {
     text-align: center;
   }
   img {
@@ -135,15 +138,11 @@ button {
   font-size: 0.8em;
 }
 
-
-
 #msg {
   font-size: 0.8em;
   color: #a00;
   padding-left: 1em;
 }
-
-
 
 @media only screen and (max-width : 767px) {
   width: 90%;
@@ -152,8 +151,10 @@ button {
 }
 
 caption {
-  margin: 1em;
+  margin: 0.5em 1em;
   font-weight: bold;
+  caption-side: top;
+  text-align: center;
 }
 
 // forms
