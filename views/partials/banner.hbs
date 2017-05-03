@@ -1,8 +1,11 @@
 <header>
-  <nav class="navbar navbar-toggleable-md">
+  <nav class="navbar navbar-toggleable-md navbar-inverse" role="navigation">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#mainbar" aria-controls="mainbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <a href="/" class="navbar-brand">LCSSL</a>
     <!--<div class="menu-item"><a href="/">Home</a></div>-->
-    <div class="navbar-collapse collapse">
+    <div class="navbar-collapse collapse" id="mainbar">
       <ul class="navbar-nav">
       {{#if user }}
           <li class="nav-item">
