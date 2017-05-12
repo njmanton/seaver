@@ -2,8 +2,7 @@
 'use strict';
 
 var Sequelize = require('sequelize'),
-    conn      = require('../config/db_config'),
-    sequelize = new Sequelize(conn.test, { logging: null }),
+    sequelize = new Sequelize(process.env.DB_TEST, { logging: null }),
     db        = {};
 
 db['Team']  = sequelize.import('./teams.js');

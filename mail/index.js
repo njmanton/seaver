@@ -1,8 +1,7 @@
 // jshint node: true, esversion: 6
 'use strict';
 
-const config  = require('../config/mail_config'),
-      mailgun = require('mailgun-js')(config);
+const mailgun = require('mailgun-js')({ apiKey: process.env.MAILGUN_KEY, domain: 'lcssl.org' });
 
 const mail = {
 
