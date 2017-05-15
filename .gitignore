@@ -3,6 +3,5 @@ nodemon.json
 test
 assets/js/vendor
 assets/css/vendor
-config
 *.sublime*
 .DS_Store
