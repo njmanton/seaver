@@ -9,6 +9,7 @@ const mail = {
 
     var data = {
       from: 'Civil Service Softball League <results@lcssl.org>',
+      cc: 'nick@mantonbradbury.com',
       to: recipient,
       subject: subject,
       text: message
