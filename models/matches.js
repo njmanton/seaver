@@ -286,7 +286,7 @@ const matches = (sequelize, DataTypes) => {
             
           }).then(rows => {
             let email_body = (rows != false) 
-              ? 'Your match result was successfully processed\n\n--\nhttp://lcssl.org' 
+              ? 'Your match result was successfully processed\n\n--\nhttps://lcssl.org'
               : 'Sorry, there was a problem updating that match' ;
             return mail.send(sender, 'Softball Results Submission', email_body, mail_response => {
               return(true);
