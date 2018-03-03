@@ -190,6 +190,12 @@ const routes = app => {
 
   });
 
+  app.post('/dataviz', (req, res) => {
+    mail.send('njmanton@gmail.com', 'dataviz test', req.body, resp => {
+      res.send(resp);
+    })
+  })
+
   // handle the ajax POST of a result
   app.post('/matches/result', (req, res) => {
     
